@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolicyDecode</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="pd-popup-container">
+    <header class="pd-popup-header">
+      <div class="pd-popup-brand">POLICYDECODE</div>
+      <div id="backend-status-badge" class="pd-status-badge status-checking">CHECKING</div>
+    </header>
+
+    <main class="pd-popup-main">
+      <div class="pd-section-label">TARGET PAGE</div>
+      <div id="target-url" class="pd-target-box">Loading...</div>
+
+      <button id="analyze-btn" class="pd-action-btn" type="button">Analyze this page</button>
+
+      <div id="popup-content-area" class="pd-result-area"></div>
+    </main>
+
+    <footer class="pd-popup-footer">
+      <span class="pd-footer-note">Not legal advice</span>
+    </footer>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

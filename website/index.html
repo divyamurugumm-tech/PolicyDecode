@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolicyDecode — Chrome Extension for Terms & Checkout Risk Analysis</title>
+  <meta name="description" content="PolicyDecode is a Chrome extension that detects Terms and checkout pages, analyzes the policy, and highlights risk flags with verified citations before you click Agree.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ======================================================================
+       1. Header
+       ====================================================================== -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="#" class="brand-link" aria-label="PolicyDecode Home">
+        <span class="brand-badge" aria-hidden="true">§</span>
+        <span class="brand-text">PolicyDecode</span>
+        <span class="brand-pill">Extension</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="#try-it" class="nav-link">Try it</a>
+        <a href="#how-it-works" class="nav-link">How it works</a>
+        <a href="#" class="nav-link github-nav-link js-github-link" target="_blank" rel="noopener noreferrer">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         2. Hero Section
+         ====================================================================== -->
+    <section class="section hero-section" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="section-tag">Instant Policy Clarity</span>
+          <h1 class="hero-headline">Know what you're agreeing to before you click Agree.</h1>
+          <p class="hero-subtext">
+            PolicyDecode is a Chrome extension that detects "I agree" checkboxes, Terms of Service, and checkout pages, analyzes hidden traps in seconds, and surfaces critical risk flags with verified direct quotes.
+          </p>
+
+          <div class="principle-banner">
+            <div>
+              <span class="principle-label">Core Principle</span>
+              <span class="principle-text">LLM for understanding, rules for calculation, citations for trust.</span>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#try-it" class="btn btn-primary btn-lg">Try PolicyDecode</a>
+            <a href="#install" class="btn btn-ghost btn-lg">Install Extension</a>
+          </div>
+        </div>
+
+        <div class="hero-preview">
+          <div class="hero-preview-badge">Example In-Browser Preview</div>
+
+          <!-- Static Risk Card (labeled Example) -->
+          <div class="pd-card" aria-label="Example Risk Card">
+            <div class="pd-header">
+              <div class="pd-brand">
+                <span class="pd-brand-title">PolicyDecode</span>
+                <span class="pd-badge-example">Example</span>
+              </div>
+              <span style="font-size: 11px; color: #9ca3af;">netflix.com</span>
+            </div>
+
+            <div class="pd-body">
+              <!-- Risk Bar -->
+              <div class="pd-risk-bar">
+                <span class="pd-risk-label">Risk Assessment</span>
+                <span class="pd-risk-badge pd-risk-yellow">MEDIUM RISK</span>
+              </div>
+
+              <!-- Flag Cards -->
+              <div class="pd-flags-list">
+                <!-- Flag 1: Auto-Renew -->
+                <div class="pd-flag-card">
+                  <div class="pd-flag-header">
+                    <span class="pd-flag-category">AUTO RENEW</span>
+                    <span class="pd-flag-severity pd-sev-high">HIGH</span>
+                  </div>
+                  <div class="pd-flag-title">Automatic Recurring Charges</div>
+                  <div class="pd-flag-explanation">Membership automatically rolls over and charges your payment method on a monthly recurring basis until canceled.</div>
+                  <div class="pd-quote-box verified">
+                    <div class="pd-quote-text">"Your Netflix membership will continue and automatically renew until terminated."</div>
+                    <div class="pd-quote-status verified">Quote found in policy</div>
+                  </div>
+                </div>
+
+                <!-- Flag 2: Refund -->
+                <div class="pd-flag-card">
+                  <div class="pd-flag-header">
+                    <span class="pd-flag-category">REFUND</span>
+                    <span class="pd-flag-severity pd-sev-medium">MEDIUM</span>
+                  </div>
+                  <div class="pd-flag-title">No Partial Refunds</div>
+                  <div class="pd-flag-explanation">Payments are strictly non-refundable with zero credits for unused subscription time.</div>
+                  <div class="pd-quote-box verified">
+                    <div class="pd-quote-text">"Payments are nonrefundable and there are no refunds or credits for partially used membership periods."</div>
+                    <div class="pd-quote-status verified">Quote found in policy</div>
+                  </div>
+                </div>
+
+                <!-- Flag 3: Cancellation -->
+                <div class="pd-flag-card">
+                  <div class="pd-flag-header">
+                    <span class="pd-flag-category">CANCELLATION</span>
+                    <span class="pd-flag-severity pd-sev-low">LOW</span>
+                  </div>
+                  <div class="pd-flag-title">Pre-Renewal Cancellation Deadline</div>
+                  <div class="pd-flag-explanation">Cancellation must occur strictly prior to the monthly billing cycle date to prevent subsequent billings.</div>
+                  <div class="pd-quote-box verified">
+                    <div class="pd-quote-text">"You must cancel your membership before it renews each month in order to avoid billing."</div>
+                    <div class="pd-quote-status verified">Quote found in policy</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pd-footer">
+              <a href="https://help.netflix.com/legal/termsofuse" target="_blank" rel="noopener noreferrer" class="pd-footer-link">Open full policy</a>
+              <span class="pd-footer-disclaimer">Not legal advice</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         3. Try It (The Focus of the Page)
+         ====================================================================== -->
+    <section class="section try-section" id="try-it">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Live Policy Analyzer</span>
+          <h2>Analyze any agreement in real-time</h2>
+          <p class="section-desc">
+            Paste any Terms of Service, Privacy Policy, or checkout agreement URL below. PolicyDecode will scan the clauses, identify traps, and verify every single citation.
+          </p>
+        </div>
+
+        <div class="try-box">
+          <form id="try-form" class="try-form-group" novalidate>
+            <div class="input-row">
+              <input
+                type="url"
+                id="policy-url-input"
+                class="url-input"
+                placeholder="https://help.netflix.com/legal/termsofuse"
+                required
+                aria-label="Policy URL to analyze"
+              >
+              <button type="submit" id="analyze-btn" class="btn btn-primary btn-lg">
+                Analyze
+              </button>
+            </div>
+
+            <div class="try-helpers">
+              <span class="helper-text">
+                Need a test URL?
+                <button type="button" id="fill-example-btn" class="btn-fill-example">
+                  Fill with Netflix Terms of Use
+                </button>
+              </span>
+              <span class="helper-text">Powered by verified citations</span>
+            </div>
+          </form>
+
+          <!-- Result Area -->
+          <div id="try-result-area" class="try-result-area" aria-live="polite">
+            <div class="try-placeholder-card">
+              <div class="placeholder-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div class="placeholder-title">Ready for analysis</div>
+              <p class="placeholder-desc">
+                Enter a policy URL above or click the Netflix example button, then press <strong>Analyze</strong> to view the extension risk card.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         4. How It Works
+         ====================================================================== -->
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Architecture & Verification</span>
+          <h2>How it works</h2>
+          <p class="section-desc">
+            A 5-step pipeline designed around zero interference, zero hallucination, and full citation attribution.
+          </p>
+        </div>
+
+        <div class="steps-grid">
+          <!-- Step 1 -->
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <h3 class="step-title">Detect</h3>
+            <p class="step-desc">
+              Silently identifies "I agree" checkboxes, checkout buttons, and policy pages without delaying clicks or altering form behavior.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <h3 class="step-title">Fetch</h3>
+            <p class="step-desc">
+              Extracts and cleans raw policy text in the background, isolating substantive legal terms from layout boilerplate.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <h3 class="step-title">Analyze</h3>
+            <p class="step-desc">
+              Evaluates auto-renewals, non-refundable clauses, cancellation barriers, and hidden fees using LLM comprehension with strict rule scoring.
+            </p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step-card">
+            <div class="step-number">04</div>
+            <h3 class="step-title">Verify Quote</h3>
+            <p class="step-desc">
+              The backend searches the raw policy text for every quote returned by the model. If not found, the quote is flagged as unverified.
+            </p>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="step-card">
+            <div class="step-number">05</div>
+            <h3 class="step-title">Show Card</h3>
+            <p class="step-desc">
+              Renders a compact, isolated risk card with overall risk score, sorted flags, and verified quotations before you click Agree.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. Install the Extension
+         ====================================================================== -->
+    <section class="section" id="install">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Quick Setup</span>
+          <h2>Install the extension</h2>
+          <p class="section-desc">
+            PolicyDecode runs as a lightweight Manifest V3 Chrome extension. Install it in less than a minute via Chrome's Developer mode.
+          </p>
+        </div>
+
+        <div class="install-grid">
+          <div class="install-steps">
+            <div class="install-step-item">
+              <span class="install-badge">1</span>
+              <div class="install-text">
+                <h4>Download from GitHub</h4>
+                <p>
+                  Clone or download the repository ZIP file from <a href="#" class="js-github-link" target="_blank" rel="noopener noreferrer">GitHub</a> to your local machine.
+                </p>
+              </div>
+            </div>
+
+            <div class="install-step-item">
+              <span class="install-badge">2</span>
+              <div class="install-text">
+                <h4>Open chrome://extensions</h4>
+                <p>
+                  Open Google Chrome (or Edge / Brave) and navigate to the Extensions management page.
+                </p>
+              </div>
+            </div>
+
+            <div class="install-step-item">
+              <span class="install-badge">3</span>
+              <div class="install-text">
+                <h4>Turn on Developer mode</h4>
+                <p>
+                  Toggle the <strong>Developer mode</strong> switch located in the upper-right corner of the Extensions page.
+                </p>
+              </div>
+            </div>
+
+            <div class="install-step-item">
+              <span class="install-badge">4</span>
+              <div class="install-text">
+                <h4>Load unpacked</h4>
+                <p>
+                  Click the <strong>Load unpacked</strong> button and select the <code>extension</code> folder inside the PolicyDecode directory.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="install-sidebox">
+            <div>
+              <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text-primary);">Chrome Extensions URL</h4>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Copy and paste into your browser address bar:</p>
+              <div class="copy-input-box">
+                <span class="copy-code">chrome://extensions</span>
+                <button type="button" class="btn-copy js-copy-btn" data-copy-target="chrome://extensions" aria-label="Copy extensions URL">Copy</button>
+              </div>
+            </div>
+
+            <div>
+              <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text-primary);">Backend Server</h4>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Ensure the local backend is running:</p>
+              <div class="copy-input-box">
+                <span class="copy-code">cd backend &amp;&amp; npm start</span>
+                <button type="button" class="btn-copy js-copy-btn" data-copy-target="cd backend && npm start" aria-label="Copy backend start command">Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. Limits and Future Scope
+         ====================================================================== -->
+    <section class="section" id="limits">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Transparency</span>
+          <h2>Limits and future scope</h2>
+          <p class="section-desc">
+            We believe in complete transparency about what PolicyDecode does today and where we are taking it next.
+          </p>
+        </div>
+
+        <div class="limits-grid">
+          <!-- Current Limits -->
+          <div class="limit-card warning-card">
+            <h3 class="limit-title">Current Limitations</h3>
+            <ul class="limit-list">
+              <li>
+                <span class="bullet-icon">&#x2022;</span>
+                <span><strong>Desktop Chrome only today:</strong> Runs as a Manifest V3 extension on desktop Chromium browsers (Google Chrome, Brave, Microsoft Edge).</span>
+              </li>
+              <li>
+                <span class="bullet-icon">&#x2022;</span>
+                <span><strong>Results can be wrong or incomplete:</strong> Automated language models can misinterpret nuance or overlook unconventional legal provisions.</span>
+              </li>
+              <li>
+                <span class="bullet-icon">&#x2022;</span>
+                <span><strong>Strictly not legal advice:</strong> PolicyDecode provides automated heuristics for consumer awareness. It does not constitute legal counsel or a formal contract evaluation.</span>
+              </li>
+            </ul>
+
+            <div class="limit-disclaimer-box">
+              Always inspect binding legal contracts and cancellation procedures directly when significant rights or financial sums are involved.
+            </div>
+          </div>
+
+          <!-- Future Scope -->
+          <div class="limit-card future-card">
+            <h3 class="limit-title">Future Scope</h3>
+            <ul class="limit-list">
+              <li>
+                <span class="bullet-icon">&#x2192;</span>
+                <span><strong>Mobile browser support:</strong> Bringing automatic agreement analysis to mobile browsers (Safari Web Extensions for iOS and Firefox for Android).</span>
+              </li>
+              <li>
+                <span class="bullet-icon">&#x2192;</span>
+                <span><strong>Dark pattern detector:</strong> Flagging manipulative UI patterns on checkout pages, including disguised subscription renewals, pre-selected checkboxes, and artificial urgency timers.</span>
+              </li>
+              <li>
+                <span class="bullet-icon">&#x2192;</span>
+                <span><strong>Custom risk sensitivities:</strong> User-customizable alerts tailored to specific personal deal-breakers (e.g. arbitration clauses, data-selling clauses, or strict return windows).</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================================================================
+       Site Footer
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-disclaimer">
+        <strong>PolicyDecode</strong> &mdash; LLM for understanding, rules for calculation, citations for trust.
+        <br>
+        Informational analysis only. Not legal advice.
+      </div>
+
+      <div class="footer-links">
+        <a href="#try-it">Try it</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#install">Install</a>
+        <a href="#" class="js-github-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts: config.js must load before script.js -->
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
