@@ -1,7 +1,7 @@
 // PolicyDecode Configuration
 // Base URL is defined only once here, per project specifications.
 const CONFIG = {
-  API_BASE: 'http://localhost:3000',
+  API_BASE: 'https://policydecode-4pxq.onrender.com',
   TIMEOUT_MS: 28000,
 };
 
